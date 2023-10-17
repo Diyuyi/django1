@@ -14,7 +14,7 @@ urlpatterns = [
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
     path('post/<int:pk>/comment/', views.add_comment, name='add_comment'),
     re_path(r'^register/', views.register, name='register'),
-    re_path(r'^/', views.user_login,name="user_login"),
+    re_path(r'user_login/', views.user_login,name="user_login"),
     # Additional URL patterns
     re_path(r'^/',views.user_logout,name='logout'),
     

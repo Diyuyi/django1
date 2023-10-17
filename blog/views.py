@@ -236,7 +236,7 @@ def user_login(request):
             posts = Post.objects.filter(updated_at__isnull=False, status = "0").order_by('-updated_at')
             # for i in posts:
             #    i.thumbnail = str(i.thumbnail).split('/')[-1] 
-            return render(request,'post_list.html',{'user': user, 'posts': posts} )
+            return redirect('post_list')
         else:
             return redirect('user_login')
     else:
@@ -283,9 +283,8 @@ class CreateNewPost(CreateView):
         obj.thumbnail = '4572202_cover_home_air_force_one.jpg'
         obj.updated_at = timezone.now()
         obj.comments = 0
-        obj.likes = 0
         obj.views = 0
-        obj.thumbnail = '8101948_Cover-iphone-15-pro-max-co-the-chiem-3540-lo-hang-iphone-moi-tinhte-tuanhtran.jpg'
+        obj.thumbnail = '8107828_CV.jpg'
         obj.save()
         return super().form_valid(form)
 
