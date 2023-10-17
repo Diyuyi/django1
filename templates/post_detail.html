@@ -53,15 +53,16 @@
                 {% for comment in comments %}
                 {% comment %} <p>*{{ comment.content }} | {{ comment.user }} | {{ comment.created_at }}</p> {% endcomment %}
                     <p>{{ comment.content }} -- {{ comment.user }} on {{ comment.created_at }} 
-                        {% if comment.user == request.user %}  
+                        {% if comment.user == request.user or  user.is_staff%}
                             <a href="{% url 'edit_comment' comment_id=comment.id %}">Edit</a>
                         {% endif %}
                     </p> 
                 {% endfor %}
-
+                
+                {% if  user.is_staff %} 
                 <a class="btn btn-success mt-2" href="{% url 'update_post' pk=post.pk %}">Update post</a>
                 <a class="btn btn-danger mt-2" href="{% url 'delete_post' pk=post.pk %}">Delete post</a>
-
+                {% endif %}
             </div>
         </div>
     </div>
