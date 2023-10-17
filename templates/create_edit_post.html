@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% if post %}Edit Post{% else %}Create Post{% endif %}</title>
+</head>
+
+<body>
+    <h1>{% if post %}Edit Post{% else %}Create Post{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    {% if post %}
+    <a href="{% url 'publish_post' pk=post.pk %}">Publish</a>
+    <!-- Link to publish the post -->
+    {% endif %}
+</body>
+
+</html>

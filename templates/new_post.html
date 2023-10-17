@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends "base_generic.html" %} 
+
+    <title>New post</title>
+</head>
+
+<body>
+    {%block content%}    
+
+    <div class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="list-unstyled ml-1">
+                    <li class="nav-item">
+                        <h1>New post</h1>
+                    </li>
+                    
+                    <li>
+                        <form method="POST" class="container">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div>
+                                <button class="btn btn-info" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {%endblock content%}
+    
+</body>
+
+</html>

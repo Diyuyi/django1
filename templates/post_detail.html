@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends "base_generic.html" %}
+    <title>{{ post.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></head>
+
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="img-fluid">
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.content }}</p>
+                <p>tổng số like {{post.total_likes}}</p>
+                <p>Published by {{ post.author }} on {{ post.created_at }}</p>
+                {% comment %} Check đăng nhập để like {% endcomment %}
+                {% if  user.is_authenticated %} 
+                <form action="{% url 'like_post' pk=post.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="pk" value="{{ post.id }}">
+                    {% if user not in post.likes.all %}
+                        <button type="submit" class="btn btn-primary">Like</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-danger">Unliked</button>
+                    {% endif %}
+                </form>
+                {%else%}
+                {% comment %} <button type="submit" class="btn btn-primary">Like</button> {% endcomment %}
+                <a class="btn btn-primary" href="{% url 'user_login' %}">Like</a>
+
+                {% endif %}
+                
+                <h2>Comments:</h2>
+                {% comment %} Check đăng nhập để cmt {% endcomment %}
+                {% if  user.is_authenticated %}         
+                    <form method="post" action="{% url 'add_comment' post.pk %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                {% else %}
+                {{ form.as_p }}
+                <a href="{% url 'user_login' %}" class="btn btn-primary">Submit</a>
+                <br>
+                 {% endif %}
+
+
+                {% for comment in comments %}
+                {% comment %} <p>*{{ comment.content }} | {{ comment.user }} | {{ comment.created_at }}</p> {% endcomment %}
+                    <p>{{ comment.content }} -- {{ comment.user }} on {{ comment.created_at }} 
+                        {% if comment.user == request.user %}  
+                            <a href="{% url 'edit_comment' comment_id=comment.id %}">Edit</a>
+                        {% endif %}
+                    </p> 
+                {% endfor %}
+
+                <a class="btn btn-success mt-2" href="{% url 'update_post' pk=post.pk %}">Update post</a>
+                <a class="btn btn-danger mt-2" href="{% url 'delete_post' pk=post.pk %}">Delete post</a>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

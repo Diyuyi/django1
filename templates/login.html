@@ -1,0 +1,20 @@
+{% extends 'base_generic.html' %}
+{%  block body_block%}
+<div class="mt-4 p-5 bg-light rounded">
+    <h1>Please Login</h1>
+    <form action="{% url 'user_login' %}" method="post">
+        {% csrf_token %}
+        <label for="username">username: </label>
+        <input type="text" name="username" id="">
+
+        <label for="password">password: </label>
+        <input type="password" name="password" id="">
+
+        <input type="submit" value="login" class="btn btn-success">
+
+
+
+    </form>
+</div>
+
+{% endblock%}

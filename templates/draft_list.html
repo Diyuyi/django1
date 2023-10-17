@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %} {% block content %}
+<h1>Drafts</h1>
+<ul>
+    {% for draft in drafts %}
+    {% comment %} <li> {% endcomment %}
+        {% comment %} <a href="{% url 'post_detail' pk=draft.pk %}">{{ draft.title }}</a>
+        <button>Public</button> {% endcomment %}
+    {% comment %} </li> {% endcomment %}
+    {% endfor %}
+    
+    {% for draft in drafts %}
+    {% load static %}
+
+    <li>
+        
+    
+        <img src="{{ draft.thumbnail.url }}" alt="{{ post.title }}" width="400px">
+        <a href="{% url 'post_detail' pk=draft.pk %}">{{ draft.title }}</a>
+
+
+        <a class="btn btn-danger" href="{% url 'publish_post' pk=draft.pk %}">Public</a>
+    </li>
+    {% endfor %}
+
+    
+</ul>
+{% endblock %}

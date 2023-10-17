@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %} {% block content %}
+<div class="content clearfix">
+    <div class="main-content">
+        <h1 class="recent-post-title">
+            Search "{{search_title}}"
+        </h1>
+        {% for draft in posts %}
+        {% load static %}
+        <div class="post">
+            <img src="{{ draft.thumbnail.url }}" alt="{{ post.title }}" class="post-image">
+            <div class="post-preview">
+                <h2><a href="{% url 'post_detail' pk=draft.pk %}">{{ draft.title }}</a></h2>
+                &nbsp;
+                <a href="{% url 'post_detail' pk=draft.pk %}" class="btn read-more">Read More</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>  
+{% endblock %}
